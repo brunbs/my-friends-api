@@ -24,6 +24,9 @@ public class Friend {
     @Column(nullable = false, length = 20)
     private String whatsapp;
 
+    @Embedded
+    private Address address;
+
     public Integer getId() {
         return id;
     }
@@ -62,6 +65,14 @@ public class Friend {
 
     public void setWhatsapp(String whatsapp) {
         this.whatsapp = whatsapp;
+    }
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
     }
 
     public int getAge() {
