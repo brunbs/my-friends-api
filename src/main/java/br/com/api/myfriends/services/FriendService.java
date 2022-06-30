@@ -1,8 +1,10 @@
 package br.com.api.myfriends.services;
 
+import br.com.api.myfriends.dtos.FriendDTO;
 import br.com.api.myfriends.models.Address;
 import br.com.api.myfriends.models.Friend;
 import br.com.api.myfriends.repositories.FriendRepository;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +15,9 @@ public class FriendService {
 
     @Autowired
     private FriendRepository friendRepository;
+
+    @Autowired
+    private ModelMapper modelMapper;
 
     public List<Friend> findAll() {
         return friendRepository.findAll();
@@ -28,6 +33,12 @@ public class FriendService {
 
     public Address findAddress(Integer id) {
         return findOneFriend(id).getAddress();
+    }
+
+    public Integer saveFriend(FriendDTO friend) {
+        Friend entity = modelMapper.map(friend, Friend.class);
+        friendRepository.saveAndFlush(entity);
+        return entity.getId();
     }
 
 }
