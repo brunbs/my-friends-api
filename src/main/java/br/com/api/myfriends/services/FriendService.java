@@ -6,6 +6,9 @@ import br.com.api.myfriends.models.Friend;
 import br.com.api.myfriends.repositories.FriendRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -56,6 +59,22 @@ public class FriendService {
             entity.setAddress(address);
             friendRepository.save(entity);
         }
+    }
+
+    public void deleteFriend(Integer id) {
+        Friend entity = findOneFriend(id);
+        friendRepository.delete(entity);
+    }
+
+    public Page<Friend> pagination(String name, int page, int size) {
+        Pageable paging = PageRequest.of(page, size);
+        Page<Friend> friends = null;
+        if(name == null || name.isEmpty()) {
+            friends = friendRepository.findAll(paging);
+        } else {
+            friends = friendRepository.findByNameContaining(name, paging);
+        }
+        return friends;
     }
 
 }
