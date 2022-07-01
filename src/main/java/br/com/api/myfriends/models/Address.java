@@ -15,7 +15,7 @@ public class Address {
     @Column(nullable = false, length = 6)
     private String number;
 
-    @Column(nullable = false, length = 20)
+    @Column(length = 20)
     private String complement;
 
     @Column(nullable = false, length = 70)

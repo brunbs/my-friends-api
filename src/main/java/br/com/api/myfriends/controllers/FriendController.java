@@ -1,6 +1,7 @@
 package br.com.api.myfriends.controllers;
 
 import br.com.api.myfriends.dtos.FriendDTO;
+import br.com.api.myfriends.models.Address;
 import br.com.api.myfriends.models.Friend;
 import br.com.api.myfriends.services.FriendService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,5 +36,17 @@ public class FriendController {
     @PostMapping
     public ResponseEntity postFriend(@RequestBody FriendDTO friend) {
         return new ResponseEntity<>(friendService.saveFriend(friend), HttpStatus.CREATED);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity updateFriend(@PathVariable("id") Integer id, @RequestBody FriendDTO friend) {
+        friendService.updateFriend(id, friend);
+        return ResponseEntity.ok().body(null);
+    }
+
+    @PatchMapping("/{id}/address")
+    public ResponseEntity updateFriendAddress(@PathVariable("id") Integer id, @RequestBody Address address) {
+        friendService.updateAddress(id, address);
+        return ResponseEntity.ok().body(null);
     }
 }

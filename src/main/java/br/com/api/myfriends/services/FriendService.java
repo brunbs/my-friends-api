@@ -41,4 +41,21 @@ public class FriendService {
         return entity.getId();
     }
 
+    public void updateFriend(Integer id, FriendDTO friend) {
+        Friend entity = findOneFriend(id);
+        if(entity != null) {
+            entity = modelMapper.map(friend, Friend.class);
+            entity.setId(id);
+            friendRepository.save(entity);
+        }
+    }
+
+    public void updateAddress(Integer id, Address address) {
+        Friend entity = findOneFriend(id);
+        if(entity != null) {
+            entity.setAddress(address);
+            friendRepository.save(entity);
+        }
+    }
+
 }
